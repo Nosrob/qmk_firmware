@@ -77,10 +77,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (clockwise) {
-      tap_code(KC_VOLU);
+    uint8_t mods_state = get_mods();
+    if (mods_state & MOD_BIT(KC_LSFT)) { // If you are holding L shift, encoder changes screen brightness
+        clockwise ? tap_code16(KC_BRIU) : tap_code16(KC_BRID);
+    } else if (mods_state & MOD_BIT(KC_LGUI)) { // If you are holding L Cmd, encoder navigates through history
+        clockwise ? tap_code16(LGUI(LSFT(KC_W))) : tap_code16(LGUI(KC_W));
     } else {
-      tap_code(KC_VOLD);
+        clockwise ? tap_code(KC_VOLU) : tap_code(KC_VOLD);
     }
     return false;
 }
