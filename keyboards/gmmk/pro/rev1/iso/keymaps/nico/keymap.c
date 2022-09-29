@@ -79,7 +79,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool encoder_update_user(uint8_t index, bool clockwise) {
     uint8_t mods_state = get_mods();
     if (mods_state & MOD_BIT(KC_LSFT)) { // If you are holding L shift, encoder changes screen brightness
+        unregister_mods(MOD_BIT(KC_LSFT));
         clockwise ? tap_code16(KC_BRIU) : tap_code16(KC_BRID);
+        register_mods(MOD_BIT(KC_LSFT));
     } else if (mods_state & MOD_BIT(KC_LGUI)) { // If you are holding L Cmd, encoder navigates through history
         clockwise ? tap_code16(LGUI(LSFT(KC_W))) : tap_code16(LGUI(KC_W));
     } else {
