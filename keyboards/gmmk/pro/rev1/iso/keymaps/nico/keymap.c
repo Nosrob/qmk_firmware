@@ -346,50 +346,13 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 }
             }				
         }
-
-        
         break;
-        
         default:
-        fn_active = false;
         if (game_start) {
             // Reset lighting settings
             game_start = false;
             rgb_matrix_sethsv_noeeprom(last_hsv.h, last_hsv.s, last_hsv.v);
         }
         break;			
-    }
-
-    if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK)) {
-        if (!caps_active) {
-            caps_active = true;
-            caps_flash_on = true;
-            caps_flasher = timer_read();
-        }
-        if (timer_elapsed(caps_flasher) > 500) {
-            caps_flasher = timer_read();
-            caps_flash_on = !caps_flash_on;
-        }
-
-        rgb_matrix_set_color(LED_CAPS, RGB_WHITE);
-        if (caps_flash_on) {
-            for (uint8_t i=0; i<sizeof(LED_SIDE_LEFT)/sizeof(LED_SIDE_LEFT[0]); i++) {
-                rgb_matrix_set_color(LED_SIDE_LEFT[i], RGB_RED);
-                rgb_matrix_set_color(LED_SIDE_RIGHT[i], RGB_RED);
-            }
-        } else {
-            for (uint8_t i=0; i<sizeof(LED_SIDE_LEFT)/sizeof(LED_SIDE_LEFT[0]); i++) {
-                rgb_matrix_set_color(LED_SIDE_LEFT[i], 0, 0, 0);
-                rgb_matrix_set_color(LED_SIDE_RIGHT[i], 0, 0, 0);
-            }
-        }
-    } else {
-        caps_active = false;
-    }
-    if (IS_HOST_LED_ON(USB_LED_SCROLL_LOCK)) {
-        rgb_matrix_set_color(LED_F10,  RGB_WHITE);
-    }
-    if (keymap_config.no_gui) {
-        rgb_matrix_set_color(LED_LWIN, RGB_RED);  //light up Win key when disabled
     }
 }
