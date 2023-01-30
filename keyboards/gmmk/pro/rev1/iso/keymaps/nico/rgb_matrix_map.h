@@ -21,7 +21,6 @@
 	bool caps_active = false;
 	bool caps_flash_on = false;
 
-	static uint16_t caps_flasher = 0;
 	RGB rgb_value;
 
     // RGB LED locations
